@@ -1,0 +1,43 @@
+#!/bin/bash -xe
+modprobe libcomposite
+
+GADGET_NAME="pig"
+C="1"
+N="usb0"
+
+mkdir -p "/sys/kernel/config/usb_gadget/${GADGET_NAME}"
+cd "/sys/kernel/config/usb_gadget/${GADGET_NAME}"
+
+echo 0x1d6b > idVendor  # Linux Foundation
+echo 0x0104 > idProduct # Multifunction Composite Gadget
+echo 0x0100 > bcdDevice # v1.0.0
+echo 0x0200 > bcdUSB    # USB 2.0
+
+mkdir -p strings/0x409
+echo "1beefcafe0011559"         > strings/0x409/serialnumber
+echo "raspberry pi gadget"      > strings/0x409/manufacturer
+echo "Pig HID Mouse"             > strings/0x409/product
+
+mkdir -p configs/c.$C
+
+## hid mouse
+mkdir -p functions/hid.$N
+echo 2 > functions/hid.$N/protocol
+echo 0 > functions/hid.$N/subclass
+echo 4 > functions/hid.$N/report_length
+
+MOUSE_REPORT_DESC="\
+\\x05\\x01\\x09\\x02\\xA1\\x01\\x09\\x01\\xA1\\x00\\x05\\x09\\x19\\x01\\x29\\x05\
+\\x15\\x00\\x25\\x01\\x95\\x05\\x75\\x01\\x81\\x02\\x95\\x01\\x75\\x03\\x81\\x01\
+\\x05\\x01\\x09\\x30\\x09\\x31\\x09\\x38\\x15\\x81\\x25\\x7F\\x75\\x08\\x95\\x03\
+\\x81\\x6\\xC0\\xC0"
+
+echo -en ${MOUSE_REPORT_DESC} > functions/hid.$N/report_desc
+
+ln -s functions/hid.$N configs/c.$C/
+## end hid mouse
+
+echo 0 > configs/c.$C/MaxPower
+
+udevadm settle -t 5 || : # Watches the udv event queue, and exists if all current events are handled
+ls /sys/class/udc/ > UDC
