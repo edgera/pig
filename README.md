@@ -4,13 +4,13 @@ A repo for performing windows 10 input via usb from raspberry pi 4
 
 
 ## Resources this repo is built on
-https://threadsec.wordpress.com/raspberry-pi-zero-usb-composite-gadget/
-https://blog.gbaman.info/?p=791
-https://blog.gbaman.info/?p=699
-https://www.collabora.com/news-and-blog/blog/2019/06/24/using-dummy-hcd/
-https://github.com/darrylburke/RaspberryPiZero_HID_MultiTool/tree/master/gadget/hid
-http://irq5.io/2016/12/22/raspberry-pi-zero-as-multiple-usb-gadgets/
-https://www.isticktoit.net/?p=1383
+- https://threadsec.wordpress.com/raspberry-pi-zero-usb-composite-gadget/
+- https://blog.gbaman.info/?p=791
+- https://blog.gbaman.info/?p=699
+- https://www.collabora.com/news-and-blog/blog/2019/06/24/using-dummy-hcd/
+- https://github.com/darrylburke/RaspberryPiZero_HID_MultiTool/tree/master/gadget/hid
+- http://irq5.io/2016/12/22/raspberry-pi-zero-as-multiple-usb-gadgets/
+- https://www.isticktoit.net/?p=1383
 
 # Raspberry pi setup
 Some combination of the following seemed to make stuff work.
